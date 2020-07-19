@@ -4,14 +4,21 @@ import java.util.*;
 import java.util.stream.Stream;
 
 
-public abstract class NodeGraph<T extends PrimitiveNode, K extends PrimitiveEdge, V extends NodeGraph> {
+public abstract class NodeGraph<T extends PrimitiveNode, K extends PrimitiveEdge, V extends NodeGraph> implements Runnable{
 
     private final List<T> nodes = new LinkedList<>();
-    private volatile short idCount;
 
     public abstract V create();
 
     public abstract boolean validateDeletion();
+
+    @Override
+    public void run() {
+        for (T node : nodes) {
+            if(node.hasScheduledUpdate())
+                node.update();
+        }
+    }
 
     public T getNode(int id){
         return nodes.get(id);
