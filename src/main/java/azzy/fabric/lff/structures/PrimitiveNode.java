@@ -25,8 +25,16 @@ abstract class PrimitiveNode<T extends NodeGraph, K extends PrimitiveEdge, V ext
         return edges.get(node);
     }
 
+    @SuppressWarnings("unchecked")
     public void createEdge(V targetNode){
         edges.put(targetNode, (K) PrimitiveEdge.of(this, targetNode));
+    }
+
+    @SuppressWarnings("unchecked")
+    public synchronized void createAndValidateEdge(V targetNode){
+        K edge = (K) PrimitiveEdge.of(this, targetNode);
+        edges.put(targetNode, edge);
+        edge.validate();
     }
 
     public boolean hasScheduledUpdate(){
