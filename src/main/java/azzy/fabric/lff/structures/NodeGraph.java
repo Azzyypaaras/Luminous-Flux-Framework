@@ -1,37 +1,44 @@
 package azzy.fabric.lff.structures;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Stream;
 
 
-public abstract class NodeGraph<T extends PrimitiveNode, K extends PrimitiveEdge> {
+public abstract class NodeGraph<T extends PrimitiveNode, K extends PrimitiveEdge, V extends NodeGraph> {
 
     private final List<T> nodes = new LinkedList<>();
-
-    private static final Random RANDOM = new Random();
-    private final long UUID;
     private volatile short idCount;
 
-    protected NodeGraph(){
-        UUID =
-    }
+    public abstract V create();
 
-    protected T getNode(int id){
+    public abstract boolean validateDeletion();
+
+    public T getNode(int id){
         return nodes.get(id);
     }
 
-    protected T getNode(int id, Class<T> nodeType){
+    public T getNode(int id, Class<T> nodeType){
         return nodeType.cast(nodes.get(id));
     }
 
-    protected int addNode(T node){
-        nodes.add(node);
-        return nodes.size() - 1;
+    public int getNodeId(T node){
+        return nodes.indexOf(node);
     }
 
-    synchronized short generateId(){
-        return idCount++;
+    public void mergeNodes(Collection<T> mergedNodes){
+        nodes.addAll(mergedNodes);
+    }
+
+    public List<T> getNodes() {
+        return nodes;
+    }
+
+    public Stream<T> nodeStream(){
+        return nodes.parallelStream();
+    }
+
+    public int addNode(T node){
+        nodes.add(node);
+        return nodes.size() - 1;
     }
 }
