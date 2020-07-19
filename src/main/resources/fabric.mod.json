@@ -1,15 +1,15 @@
 {
   "schemaVersion": 1,
-  "id": "lookingglass",
+  "id": "luminousflux",
   "version": "${version}",
 
-  "name": "Through the Looking Glass",
-  "description": "For all your furry shit!",
+  "name": "Luminous Flux Framework",
+  "description": "",
   "authors": [
     "Azazelthedemonlord"
   ],
   "contact": {
-    "homepage": "https://github.com/Dragonoidzero/Through-the-Looking-Glass",
+    "homepage": "https://github.com/Dragonoidzero/Luminous-Flux-Framework",
     "sources": ""
   },
 
@@ -19,21 +19,17 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "azzy.fabric.lookingglass.LookingGlass"
-    ],
-    "client": [
-      "azzy.fabric.lookingglass.ClientInit"
+      "azzy.fabric.lff.LuminousFlux"
     ]
   },
   "mixins": [
-    "lookingglass.mixins.json"
+    "luminousflux.mixins.json"
   ],
 
   "depends": {
     "fabricloader": ">=0.7.4",
     "fabric": "*",
-    "minecraft": "1.16.x",
-    "libgui": "*"
+    "minecraft": "1.16.x"
   },
   "suggests": {
   }

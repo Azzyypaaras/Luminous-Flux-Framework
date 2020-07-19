@@ -1,12 +1,9 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "azzy.fabric.lookingglass.mixin",
+  "package": "azzy.fabric.lff.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "TextureUnregister"
-  ],
-  "client": [
   ],
   "injectors": {
     "defaultRequire": 1
