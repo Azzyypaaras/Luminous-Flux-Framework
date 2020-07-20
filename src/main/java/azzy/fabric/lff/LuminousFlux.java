@@ -14,6 +14,5 @@ public class LuminousFlux implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		GraphTracker.init(Thread.currentThread());
 	}
 }

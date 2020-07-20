@@ -3,13 +3,12 @@ package azzy.fabric.lff.structures;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-abstract class PrimitiveNode<T extends NodeGraph, K extends PrimitiveEdge, V extends PrimitiveNode> {
+abstract class PrimitiveNode<T extends NodeGraph, V extends PrimitiveNode> {
 
     private volatile T network;
-    private volatile HashMap<V, K> edges = new HashMap<>();
     private volatile AtomicBoolean scheduledUpdate;
 
-    protected PrimitiveNode(T network){
+    PrimitiveNode(T network){
         this.network = network;
     }
 
@@ -21,20 +20,15 @@ abstract class PrimitiveNode<T extends NodeGraph, K extends PrimitiveEdge, V ext
         this.network = network;
     }
 
-    public K getEdge(V node){
-        return edges.get(node);
-    }
-
     @SuppressWarnings("unchecked")
     public void createEdge(V targetNode){
-        edges.put(targetNode, (K) PrimitiveEdge.of(this, targetNode));
+        network.createEdge(this, targetNode);
     }
 
     @SuppressWarnings("unchecked")
     public synchronized void createAndValidateEdge(V targetNode){
-        K edge = (K) PrimitiveEdge.of(this, targetNode);
-        edges.put(targetNode, edge);
-        edge.validate();
+        network.createEdge(this, targetNode);
+        network.getEdge(targetNode).validate();
     }
 
     public boolean hasScheduledUpdate(){

@@ -1,9 +1,9 @@
 package azzy.fabric.lff.structures;
 
-abstract class PrimitiveEdge<T extends PrimitiveNode> {
+public abstract class PrimitiveEdge<T extends PrimitiveNode> {
 
-    private T nodeA, nodeB;
-    private boolean validated;
+    protected T nodeA, nodeB;
+    protected boolean validated;
 
     protected PrimitiveEdge(T nodeA, T nodeB){
         this.nodeA = nodeA;
@@ -14,9 +14,9 @@ abstract class PrimitiveEdge<T extends PrimitiveNode> {
         return null;
     }
 
-    abstract void validate();
+    public abstract void validate();
 
-    abstract void check();
+    public abstract void check();
 
     public boolean isValidated() {
         return validated;

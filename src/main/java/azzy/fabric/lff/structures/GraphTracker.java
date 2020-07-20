@@ -78,7 +78,7 @@ public class GraphTracker<T extends NodeGraph> extends Thread{
 //    public void run() {
 //        LFLog.info(INSTANCE.getName() + " has been successfully initiated!");
 //        while(parent.isAlive()){
-//            if(System.currentTimeMillis() % 50 == 0 && MinecraftServer.DEMO_LEVEL_INFO != null){
+//            if(System.currentTimeMillis() % 50 == 0){
 //                networks.values().forEach(executor::execute);
 //                if(networkSchedulerQueue.size() > 16 * networks.size()){
 //                    LFLog.error("NETWORK UPDATES ARE "+networkSchedulerQueue.size()+" CYCLES BEHIND, ATTEMPTING TO CATCH UP");
