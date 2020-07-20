@@ -1,28 +1,15 @@
 package azzy.fabric.lff.structures;
 
 import java.util.*;
-import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.stream.Stream;
 
 
-public abstract class NodeGraph<T extends PrimitiveNode, K extends PrimitiveEdge, V extends NodeGraph> implements Runnable{
+public abstract class NodeGraph<T extends PrimitiveNode<V, T, K>, K extends PrimitiveEdge<V, T, K>, V extends NodeGraph<T, K, V>>{
 
     private final List<T> nodes = new LinkedList<>();
-    private final EdgeMap<T, K> edges = new EdgeMap<>();
+    private final EdgeMap<T, K, V> edges = new EdgeMap<>();
     private BiFunction<T, T, K> edgeFactory = ((nodeA, nodeB) -> (K) K.of(nodeA, nodeB));
-
-    public abstract V create();
-
-    //public abstract boolean validateDeletion();
-
-    @Override
-    public void run() {
-        for (T node : nodes) {
-            if(node.hasScheduledUpdate())
-                node.update();
-        }
-    }
 
     public T getNode(int id){
         return nodes.get(id);

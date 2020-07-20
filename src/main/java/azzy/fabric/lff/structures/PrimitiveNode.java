@@ -1,9 +1,8 @@
 package azzy.fabric.lff.structures;
 
-import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-abstract class PrimitiveNode<T extends NodeGraph, V extends PrimitiveNode> {
+abstract class PrimitiveNode<T extends NodeGraph<V, K, T>, V extends PrimitiveNode<T, V, K>, K extends PrimitiveEdge<T, V, K>> {
 
     private volatile T network;
     private volatile AtomicBoolean scheduledUpdate;
@@ -22,12 +21,12 @@ abstract class PrimitiveNode<T extends NodeGraph, V extends PrimitiveNode> {
 
     @SuppressWarnings("unchecked")
     public void createEdge(V targetNode){
-        network.createEdge(this, targetNode);
+        network.createEdge((V) this, targetNode);
     }
 
     @SuppressWarnings("unchecked")
     public synchronized void createAndValidateEdge(V targetNode){
-        network.createEdge(this, targetNode);
+        network.createEdge((V) this, targetNode);
         network.getEdge(targetNode).validate();
     }
 

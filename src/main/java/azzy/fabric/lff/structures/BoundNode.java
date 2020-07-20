@@ -4,17 +4,15 @@ import net.minecraft.block.Block;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public abstract class BoundNode<T extends WorldGraph, V extends PrimitiveNode, U extends Pathfinder, K extends BoundNode>  extends PrimitiveNode<T, V> {
+public abstract class BoundNode<T extends WorldGraph<K, V, T>, V extends BoundNode<T, V, K>, K extends PrimitiveEdge<T, V, K>>  extends PrimitiveNode<T, V, K> {
 
     private final BlockPos pos;
     private final Block block;
-    private U pathfinder;
 
-    protected BoundNode(T network, BlockPos pos, Block block, U pathfinder) {
+    protected BoundNode(T network, BlockPos pos, Block block) {
         super(network);
         this.pos = pos;
         this.block = block;
-        this.pathfinder = pathfinder;
     }
 
     public BlockPos getPos() {

@@ -2,9 +2,7 @@ package azzy.fabric.lff.structures;
 
 import com.google.common.collect.HashBiMap;
 
-import java.util.HashMap;
-
-public class EdgeMap<T extends PrimitiveNode, K extends PrimitiveEdge> {
+public class EdgeMap<T extends PrimitiveNode<V, T, K>, K extends PrimitiveEdge<V, T, K>, V extends NodeGraph<T, K, V>> {
 
     private final HashBiMap<T, K> mapT;
     private final HashBiMap<T, K> mapK;

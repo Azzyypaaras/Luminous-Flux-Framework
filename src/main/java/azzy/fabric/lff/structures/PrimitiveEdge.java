@@ -1,11 +1,11 @@
 package azzy.fabric.lff.structures;
 
-public abstract class PrimitiveEdge<T extends PrimitiveNode> {
+public abstract class PrimitiveEdge<T extends NodeGraph<V, K, T>, V extends PrimitiveNode<T, V, K>, K extends PrimitiveEdge<T, V, K>> {
 
-    protected T nodeA, nodeB;
+    protected V nodeA, nodeB;
     protected boolean validated;
 
-    protected PrimitiveEdge(T nodeA, T nodeB){
+    protected PrimitiveEdge(V nodeA, V nodeB){
         this.nodeA = nodeA;
         this.nodeB = nodeB;
     }

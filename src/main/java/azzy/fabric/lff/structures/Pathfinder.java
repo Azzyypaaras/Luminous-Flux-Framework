@@ -10,10 +10,9 @@ import java.util.LinkedList;
  * However, any and all pathfinders to be used by a node must implement all methods listed bellow in the described ways,
  * otherwise, unexpected behaviour may arise.
  *
- * @param <T> A value dictating the expected return type of reasons.
  * @see ReasonPair
  */
-public interface Pathfinder<T>{
+public interface Pathfinder{
 
     /**
      * Gets the shortest unobstructed path to the goal
@@ -93,8 +92,7 @@ public interface Pathfinder<T>{
     }
 
     /**
-     * A combination pair of a path and an array of typed reasons why transactions
-     * could not be performed freely through said path.
+     * A combination pair of a path and an array of positions that prevent free transactions
      */
     class ReasonPair{
 
