@@ -1,16 +1,12 @@
 package azzy.fabric.lff.structures;
 
+import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 
-public class EdgeMap<T extends PrimitiveNode<V, T, K>, K extends PrimitiveEdge<V, T, K>, V extends NodeGraph<T, K, V>> {
+public class EdgeMap<T extends PrimitiveNode<?, T>, K extends PrimitiveEdge<T>> {
 
-    private final HashBiMap<T, K> mapT;
-    private final HashBiMap<T, K> mapK;
-
-    public EdgeMap(){
-        mapT = HashBiMap.create(32);
-        mapK = HashBiMap.create(32);
-    }
+    private final BiMap<T, K> mapT = HashBiMap.create(32);
+    private final BiMap<T, K> mapK = HashBiMap.create(32);
 
     public boolean put(T nodeA, T nodeB, K edge){
         if(!checkExistance(nodeA, nodeB)){
@@ -32,6 +28,6 @@ public class EdgeMap<T extends PrimitiveNode<V, T, K>, K extends PrimitiveEdge<V
     }
 
     private boolean checkExistance(T nodeA, T nodeB){
-        return (mapT.containsKey(nodeA) && mapK.containsKey(nodeB)) || (mapT.containsKey(nodeB) && mapK.containsKey(nodeA));
+        return mapT.containsKey(nodeA) && mapK.containsKey(nodeB) || mapT.containsKey(nodeB) && mapK.containsKey(nodeA);
     }
 }

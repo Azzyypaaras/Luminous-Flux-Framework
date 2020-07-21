@@ -2,16 +2,16 @@ package azzy.fabric.lff.structures;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-abstract class PrimitiveNode<T extends NodeGraph<V, K, T>, V extends PrimitiveNode<T, V, K>, K extends PrimitiveEdge<T, V, K>> {
+abstract class PrimitiveNode<T extends NodeGraph<V, ?>, V extends PrimitiveNode<T, V>> {
 
-    private volatile T network;
-    private volatile AtomicBoolean scheduledUpdate;
+    private T network;
+    private AtomicBoolean scheduledUpdate;
 
     PrimitiveNode(T network){
         this.network = network;
     }
 
-    public NodeGraph getNetwork(){
+    public T getNetwork(){
         return network;
     }
 

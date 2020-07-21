@@ -4,7 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public abstract class BoundNode<T extends WorldGraph<K, V, T>, V extends BoundNode<T, V, K>, K extends PrimitiveEdge<T, V, K>>  extends PrimitiveNode<T, V, K> {
+public abstract class BoundNode<T extends WorldGraph<V, ?>, V extends BoundNode<T, V>> extends PrimitiveNode<T, V> {
 
     private final BlockPos pos;
     private final Block block;
@@ -19,9 +19,8 @@ public abstract class BoundNode<T extends WorldGraph<K, V, T>, V extends BoundNo
         return pos;
     }
 
-    @SuppressWarnings("unchecked")
     public World getParentWorld(){
-        return ((T) getNetwork()).getWorld();
+        return getNetwork().getWorld();
     }
 
     public boolean checkIntegrity(BlockPos pos){

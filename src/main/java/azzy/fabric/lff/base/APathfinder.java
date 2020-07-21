@@ -1,12 +1,11 @@
 package azzy.fabric.lff.base;
 
-import azzy.fabric.lff.structures.BoundNode;
 import azzy.fabric.lff.structures.Pathfinder;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.LinkedList;
 
-public class APathfinder<T extends BlockBasedGraph<BoundNode<BlockBasedGraph, PathingNode, BlockEdge<PathingNode>>>> implements Pathfinder {
+public class APathfinder<N extends PathingNode<T, N>, T extends BlockBasedGraph<N, ? extends BlockEdge<N>>> implements Pathfinder {
 
     private T network;
 

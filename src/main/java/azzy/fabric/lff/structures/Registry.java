@@ -2,49 +2,44 @@ package azzy.fabric.lff.structures;
 
 import azzy.fabric.lff.base.BlockBasedGraph;
 import azzy.fabric.lff.base.BlockEdge;
-import azzy.fabric.lff.base.PathingNode;
 import net.minecraft.block.AbstractBlock;
 
 import java.util.*;
 
-public class Registry<T extends BoundNode, K extends AbstractBlock & NetworkBlock, V extends BlockBasedGraph<BoundNode<BlockBasedGraph, PathingNode, BlockEdge<PathingNode>>>> {
-
-    private final HashMap<Class, List<K>> NODEBLOCKREGISTRY = new HashMap<>();
-    private final HashMap<Class, List<T>> NETWORKNODEREGISTRY = new HashMap<>();
-    public static Registry REGISTRY;
+public class Registry<T extends BoundNode<V, T>, K extends AbstractBlock & NetworkBlock, V extends BlockBasedGraph<T, ? extends BlockEdge<T>>> {
+    private static final Registry<?, ?, ?> INSTANCE = new Registry<>();
+    private final HashMap<Class<T>, List<K>> nodeBlockRegistry = new HashMap<>();
+    private final HashMap<Class<V>, List<T>> networkNodeRegistry = new HashMap<>();
 
     private Registry(){
     }
 
-    public static void init(){
-        if(REGISTRY != null)
-            throw(new IllegalStateException("The Registry is a singleton ya neet!"));
-
-        REGISTRY = new Registry<>();
+    @SuppressWarnings("unchecked")
+    public static <T extends BoundNode<V, T>, K extends AbstractBlock & NetworkBlock, V extends BlockBasedGraph<T, ? extends BlockEdge<T>>> Registry<T, K, V> getInstance() {
+        return (Registry<T, K, V>) INSTANCE;
     }
 
     public void registerNode(Class<T> node, K[] blocks){
-        NODEBLOCKREGISTRY.put(node, Arrays.asList(blocks));
+        nodeBlockRegistry.put(node, Arrays.asList(blocks));
     }
 
     public void registerGraph(Class<V> graph, T[] nodes){
-        NETWORKNODEREGISTRY.put(graph, Arrays.asList(nodes));
+        networkNodeRegistry.put(graph, Arrays.asList(nodes));
     }
 
     public List<K> get(T node){
-        return NODEBLOCKREGISTRY.get(node.getClass());
+        return nodeBlockRegistry.get(node.getClass());
     }
 
     public List<T> get(V graph){
-        return NETWORKNODEREGISTRY.get(graph.getClass());
+        return networkNodeRegistry.get(graph.getClass());
     }
 
     public List<K> getGraphBlocks(Class<V> graph){
         Set<K> blocks = new HashSet<>();
-        for(T node : NETWORKNODEREGISTRY.get(graph)){
-            blocks.addAll(NODEBLOCKREGISTRY.get(node.getClass()));
+        for(T node : networkNodeRegistry.get(graph)){
+            blocks.addAll(nodeBlockRegistry.get(node.getClass()));
         }
-        return (List<K>) blocks;
+        return new ArrayList<>(blocks);
     }
-
 }

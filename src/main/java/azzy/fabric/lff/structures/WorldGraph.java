@@ -2,13 +2,12 @@ package azzy.fabric.lff.structures;
 
 import net.minecraft.server.world.ServerWorld;
 
-public abstract class WorldGraph<T extends PrimitiveEdge<V, K, T>, K extends BoundNode<V, K, T>, V extends WorldGraph<T, K, V>> extends NodeGraph<K, T, V>{
+public abstract class WorldGraph<T extends BoundNode<?, ?>, K extends PrimitiveEdge<T>> extends NodeGraph<T, K> {
 
-    protected final K bindingNode;
+    protected final T bindingNode;
     private final ServerWorld world;
 
-    @SuppressWarnings("unchecked")
-    protected WorldGraph(ServerWorld world, K bindingNode){
+    protected WorldGraph(ServerWorld world, T bindingNode){
         this.world = world;
         this.bindingNode = bindingNode;
         addNode(bindingNode);

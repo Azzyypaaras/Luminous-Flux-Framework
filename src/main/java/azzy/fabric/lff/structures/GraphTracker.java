@@ -5,9 +5,8 @@ import net.minecraft.server.MinecraftServer;
 import java.util.*;
 import java.util.concurrent.*;
 
-import static azzy.fabric.lff.LuminousFlux.LFLog;
 
-public class GraphTracker<T extends NodeGraph> extends Thread{
+public class GraphTracker<T extends NodeGraph<?, ?>> extends Thread {
 
 //    private final HashMap<String, T> networks;
 //    private static final SplittableRandom RANDOM = new SplittableRandom();

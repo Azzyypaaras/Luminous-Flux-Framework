@@ -6,11 +6,11 @@ import azzy.fabric.lff.structures.WorldGraph;
 import net.minecraft.block.Block;
 import net.minecraft.util.math.BlockPos;
 
-public class PathingNode extends BoundNode<BlockBasedGraph<PathingNode>, PathingNode, BlockEdge<PathingNode>>{
+public class PathingNode<T extends BlockBasedGraph<V, ? extends BlockEdge<V>>, V extends BoundNode<T, V>> extends BoundNode<T, V> {
 
     Pathfinder pathfinder;
 
-    protected PathingNode(WorldGraph network, BlockPos pos, Block block, Pathfinder pathfinder) {
+    protected PathingNode(T network, BlockPos pos, Block block, Pathfinder pathfinder) {
         super(network, pos, block);
         this.pathfinder = pathfinder;
     }

@@ -4,12 +4,11 @@ import java.util.*;
 import java.util.function.BiFunction;
 import java.util.stream.Stream;
 
-
-public abstract class NodeGraph<T extends PrimitiveNode<V, T, K>, K extends PrimitiveEdge<V, T, K>, V extends NodeGraph<T, K, V>>{
+public abstract class NodeGraph<T extends PrimitiveNode<?, T>, K extends PrimitiveEdge<T>> {
 
     private final List<T> nodes = new LinkedList<>();
-    private final EdgeMap<T, K, V> edges = new EdgeMap<>();
-    private BiFunction<T, T, K> edgeFactory = ((nodeA, nodeB) -> (K) K.of(nodeA, nodeB));
+    private final EdgeMap<T, K> edges = new EdgeMap<>();
+    private BiFunction<T, T, K> edgeFactory = (a, b) -> null;
 
     public T getNode(int id){
         return nodes.get(id);

@@ -10,14 +10,11 @@ import net.minecraft.util.math.BlockPos;
 import java.util.HashSet;
 import java.util.Set;
 
-public class BlockBasedGraph<P extends BoundNode<BlockBasedGraph<P, T>, P, T>, T extends BlockEdge<P>> extends WorldGraph<T, P, BlockBasedGraph<P, T>>
-{
+public class BlockBasedGraph<T extends BoundNode<? extends BlockBasedGraph<T, K>, T>, K extends BlockEdge<T>> extends WorldGraph<T, K> {
 
     Set<BlockPos> members = new HashSet<>();
 
-    public BlockBasedGraph(ServerWorld world, BoundNode bindingNode) {
+    public BlockBasedGraph(ServerWorld world, T bindingNode) {
         super(world, bindingNode);
     }
-
-
 }
