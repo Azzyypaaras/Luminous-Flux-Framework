@@ -12,7 +12,7 @@ import java.util.Set;
 
 public class BlockBasedGraph<T extends BoundNode<? extends BlockBasedGraph<T, K>, T>, K extends BlockEdge<T>> extends WorldGraph<T, K> {
 
-    Set<BlockPos> members = new HashSet<>();
+    Set<Pathfinder.NetworkPos> members = new HashSet<>();
 
     public BlockBasedGraph(ServerWorld world, T bindingNode) {
         super(world, bindingNode);
