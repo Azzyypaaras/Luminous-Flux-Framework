@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -58,12 +59,23 @@ public interface Pathfinder{
      *
      * @param start The starting position of the pathfinder.
      * @param goal  The position the pathfinder will create paths to.
-     * @param mesh  A list of objects the pathfinder can path through paired with their respective costs.
+     * @param mesh   A list of objects the pathfinder can path through paired with their respective costs.
      * @return A list of ReasonPairs containing a path and an array of positions that prevent free transactions
      * @see CostPair
      * @see ReasonPair
      */
-    LinkedList<ReasonPair>[] getPaths(BlockPos start, BlockPos goal, Set<CostPair> mesh, Set<Block> obstructors);
+    List<ReasonPair> getPaths(BlockPos start, BlockPos goal, Set<CostPair> mesh, LinkedList<BlockPos> exceptions, Set<Block> obstructors);
+
+    /**
+     * Gets all non-intercepting unique paths to the goal. If you don't cache the result I will stab you in your sleep.
+     *
+     * @param start The starting position of the pathfinder.
+     * @param goal  The position the pathfinder will create paths to.
+     * @param mesh  A list of objects the pathfinder can path through paired with their respective costs.
+     * @param obstructors A list of blockPos that may not be pathed through
+     * @return A list of all unique paths
+     */
+    List<ReasonPair> getAllPaths(BlockPos start, BlockPos goal, Set<CostPair> mesh, Set<Block> obstructors);
 
     /**
      * A combination pair of an object a pathfinder can path through and its cost
@@ -71,14 +83,14 @@ public interface Pathfinder{
     class CostPair {
 
         private final Block medium;
-        private final int value;
+        private final short value;
 
-        public CostPair(Block medium, int value){
+        public CostPair(Block medium, short value){
             this.medium = medium;
             this.value = value;
         }
 
-        public int getValue() {
+        public short getValue() {
             return value;
         }
 
@@ -94,14 +106,14 @@ public interface Pathfinder{
         private final CostPos parent;
         private final boolean obstruction;
 
-        public CostPos(BlockPos location, int value){
+        public CostPos(BlockPos location, short value){
             this.location = location;
             this.value = value;
             parent = null;
             obstruction = false;
         }
 
-        public CostPos(BlockPos location, int value, CostPos parent){
+        public CostPos(BlockPos location, short value, CostPos parent){
             this.location = location;
             this.value = value;
             this.parent = parent;
@@ -147,14 +159,21 @@ public interface Pathfinder{
      */
     class ReasonPair{
 
-        private final BlockPos[] obstructions;
+        private final List<BlockPos> obstructions;
         private final LinkedList<NetworkPos> path;
 
-        public ReasonPair(BlockPos[] obstructions, LinkedList<NetworkPos> path){
+        public ReasonPair(List<BlockPos> obstructions, LinkedList<NetworkPos> path){
             this.obstructions = obstructions;
             this.path = path;
         }
 
+        public LinkedList<NetworkPos> getPath() {
+            return path;
+        }
+
+        public List<BlockPos> getObstructions() {
+            return obstructions;
+        }
     }
 
     class NetworkPos{
