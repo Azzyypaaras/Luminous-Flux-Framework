@@ -180,19 +180,13 @@ public class APathfinder<N extends PathingNode<T, N>, T extends BlockBasedGraph<
     private List<CostPos> lookThoroughly(CostPos current, Set<CostPair> mesh, Set<BlockPos> visited, Set<Block> obstructors, Set<BlockPos> forbidden){
         List<CostPos> sorroundings = new LinkedList<>();
         Set<Block> validBlocks = new HashSet<>(Registry.getInstance().getGraphBlocks(network.getClass()));
-        BlockPos[] faces = new BlockPos[6];
         boolean isInMesh;
         boolean isObstruction;
+        BlockPos face;
         World world = network.getWorld();
 
-        faces[0] = current.getLocation().north();
-        faces[1] = current.getLocation().east();
-        faces[2] = current.getLocation().south();
-        faces[3] = current.getLocation().west();
-        faces[4] = current.getLocation().down();
-        faces[5] = current.getLocation().up();
-
-        for(BlockPos face : faces){
+        for(Direction direction : Direction.values()){
+            face = current.getLocation().offset(direction);
             Block block = world.getBlockState(face).getBlock();
             Iterator<CostPair> meshIterator = mesh.iterator();
             isInMesh = false;
